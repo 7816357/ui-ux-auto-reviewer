@@ -1,0 +1,16 @@
+{
+  "name": "ui-ux-auto-reviewer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Full-stack AI-based UI/UX Auto Reviewer with React frontend and Express backend.",
+  "scripts": {
+    "install-all": "npm install --prefix backend && npm install --prefix frontend",
+    "dev": "npx concurrently \"npm run dev --prefix backend\" \"npm start --prefix frontend\"",
+    "start": "npm run dev",
+    "build": "npm run build --prefix frontend",
+    "test": "echo \"No tests configured.\" && exit 0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}

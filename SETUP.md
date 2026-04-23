@@ -3,200 +3,121 @@
 ## Prerequisites
 
 - Node.js (v14 or higher)
-- npm or yarn package manager
+- npm package manager
 - Git
+
+## Root Installation
+
+From the repository root, install backend and frontend dependencies:
+
+```bash
+npm install-all
+```
+
+## Development Mode
+
+Start both backend and frontend together from the repository root:
+
+```bash
+npm run dev
+```
+
+This starts:
+
+- Frontend: `http://localhost:3000`
+- Backend: `http://localhost:5000`
 
 ## Backend Setup
 
-### 1. Navigate to backend directory
+### 1. Copy environment file
+```bash
+cp backend/.env.example backend/.env
+```
+
+### 2. Start backend only
 ```bash
 cd backend
-```
-
-### 2. Install dependencies
-```bash
-npm install
-```
-
-### 3. Create .env file
-```bash
-cp .env.example .env
-```
-
-### 4. Configure environment variables (optional)
-Edit `.env` file if needed:
-```
-PORT=5000
-NODE_ENV=development
-FRONTEND_URL=http://localhost:3000
-```
-
-### 5. Start backend server
-```bash
-# Development mode (with auto-reload)
 npm run dev
-
-# Production mode
-npm start
 ```
-
-Backend will run at: **http://localhost:5000**
 
 ## Frontend Setup
 
-### 1. Navigate to frontend directory
+### 1. Copy environment file
+```bash
+cp frontend/.env.example frontend/.env
+```
+
+### 2. Start frontend only
 ```bash
 cd frontend
-```
-
-### 2. Install dependencies
-```bash
-npm install
-```
-
-### 3. Create .env file
-```bash
-cp .env.example .env
-```
-
-### 4. Configure environment variables (if backend is on different port)
-Edit `.env` file:
-```
-REACT_APP_API_URL=http://localhost:5000/api
-```
-
-### 5. Start development server
-```bash
 npm start
 ```
 
-Frontend will run at: **http://localhost:3000**
+## Production Build
 
-## Running Both Services
+Build the frontend for production:
 
-### Option 1: Two Separate Terminals
-- Terminal 1: `cd backend && npm run dev`
-- Terminal 2: `cd frontend && npm start`
-
-### Option 2: Using Concurrently (Optional)
-Install concurrently in root:
 ```bash
-npm install -D concurrently
-```
-
-Update root package.json with:
-```json
-{
-  "scripts": {
-    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\""
-  }
-}
-```
-
-Then run:
-```bash
-npm run dev
-```
-
-## Testing the Application
-
-1. **Frontend**: Open http://localhost:3000 in your browser
-2. **Upload a design**: Drag and drop an image (PNG, JPG, GIF, WebP)
-3. **View results**: See UX score, issues, and recommendations
-4. **Analyze another**: Click "Analyze Another Design"
-
-## Troubleshooting
-
-### Port Already in Use
-```bash
-# Change backend port in .env
-PORT=5001
-
-# Or kill process using port
-# Windows: netstat -ano | findstr :5000
-# Linux/Mac: lsof -i :5000
-```
-
-### CORS Errors
-Ensure backend is running on correct port and `.env` is configured properly.
-
-### File Upload Issues
-- Check file size (max 50MB)
-- Ensure file is a valid image format
-- Check `backend/uploads/` folder permissions
-
-### Dependencies Not Installing
-```bash
-# Clear cache and reinstall
-rm -rf node_modules
-npm cache clean --force
-npm install
-```
-
-## Building for Production
-
-### Frontend Build
-```bash
-cd frontend
 npm run build
 ```
 
-### Backend for Production
+Then start the backend in production mode:
+
 ```bash
 cd backend
 NODE_ENV=production npm start
 ```
 
-## GitHub Deployment
+The backend is configured to serve the frontend build when `NODE_ENV=production`.
 
-### 1. Configure your GitHub repository
+## Running Services Separately
+
+### Backend only
 ```bash
-cd "c:\Users\HP\OneDrive\Documents\Desktop\bca project"
-git remote add origin https://github.com/<your-username>/<your-repo>.git
-git branch -M main
-git push -u origin main
+cd backend
+npm run dev
 ```
 
-### 2. Deploy the frontend to GitHub Pages
-The workflow will build and deploy the frontend automatically whenever you push to `main`.
-
-### 3. GitHub Pages URL
-After the first successful push and workflow run, your frontend will be available at:
-```
-https://<your-username>.github.io/<your-repo>/
+### Frontend only
+```bash
+cd frontend
+npm start
 ```
 
-> Note: The backend is not automatically deployed by this workflow. Use a separate hosting service such as Heroku, Vercel, or Render for the API.
+## Troubleshooting
 
-## API Documentation
+### Port already in use
+- Change `PORT` in `backend/.env`
+- On Windows: `netstat -ano | findstr :5000`
+
+### CORS errors
+- Verify backend is running
+- Confirm `REACT_APP_API_URL` in `frontend/.env`
+
+### Upload issues
+- Validate image format
+- Check file size (max 50MB)
+- Ensure `backend/uploads/` is writable
+
+## Project Deployment
+
+The repository includes a GitHub Actions workflow for deploying the frontend to GitHub Pages.
+
+## API Overview
 
 ### POST /api/analyze
-Upload a UI design for analysis
+Upload a UI design for analysis.
 
-**Request:**
-- Method: `POST`
-- Endpoint: `/api/analyze`
-- Content-Type: `multipart/form-data`
-- Field: `design` (file)
+- `Content-Type`: `multipart/form-data`
+- Field: `design`
 
-**Response:**
-```json
-{
-  "success": true,
-  "resultId": "result-1234567890",
-  "uxScore": 78,
-  "issues": [
-    {
-      "title": "Low contrast text",
-      "severity": "high",
-      "component": "Color Contrast Check"
-    }
-  ],
-  "suggestions": [
-    "Improve color contrast ratios to meet WCAG AA standards"
-  ]
-}
-```
+### GET /api/results/:id
+Fetch analysis results by ID.
+
+## Notes
+
+- For local development, the frontend can proxy API requests to the backend.
+- In production, the backend serves the frontend build.
 
 ### GET /api/results/:id
 Retrieve stored analysis results
