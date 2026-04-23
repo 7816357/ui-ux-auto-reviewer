@@ -147,6 +147,27 @@ cd backend
 NODE_ENV=production npm start
 ```
 
+## GitHub Deployment
+
+### 1. Configure your GitHub repository
+```bash
+cd "c:\Users\HP\OneDrive\Documents\Desktop\bca project"
+git remote add origin https://github.com/<your-username>/<your-repo>.git
+git branch -M main
+git push -u origin main
+```
+
+### 2. Deploy the frontend to GitHub Pages
+The workflow will build and deploy the frontend automatically whenever you push to `main`.
+
+### 3. GitHub Pages URL
+After the first successful push and workflow run, your frontend will be available at:
+```
+https://<your-username>.github.io/<your-repo>/
+```
+
+> Note: The backend is not automatically deployed by this workflow. Use a separate hosting service such as Heroku, Vercel, or Render for the API.
+
 ## API Documentation
 
 ### POST /api/analyze
