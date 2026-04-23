@@ -6,11 +6,11 @@ function ResultsDisplay({ results }) {
   const getSeverityColor = (severity) => {
     switch (severity) {
       case 'high':
-        return '#ff4335';
+        return '#9999';
       case 'medium':
-        return '#ffa500';
+        return '#582';
       case 'low':
-        return '#ffc107';
+        return '#9658';
       default:
         return '#888';
     }

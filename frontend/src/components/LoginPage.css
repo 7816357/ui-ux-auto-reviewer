@@ -154,6 +154,33 @@
   font-size: 0.95rem;
 }
 
+.auth-toggle {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.auth-toggle p {
+  color: #cbd5e1;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.toggle-button {
+  background: none;
+  border: none;
+  color: #60a5fa;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-left: 6px;
+  font-size: inherit;
+  transition: color 0.2s ease;
+}
+
+.toggle-button:hover {
+  color: #93c5fd;
+}
+
 @keyframes rain-fall {
   0% {
     background-position: 0 0;
